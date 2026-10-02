@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SOHMI Staff Management</title>
+  <link rel="stylesheet" href="../css/sohmi.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">SOHMI</div>
+      <div class="brand-sub">Admin Panel</div>
+      <nav>
+        <a href="../dashboard.html">Dashboard</a>
+        <a class="active" href="staff.html">Staff</a>
+      </nav>
+      <button id="logoutBtn" class="ghost sidebar-logout">Sign Out</button>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><h1>Staff Management</h1><p class="muted">Ludhiana Main Branch and future branches</p></div>
+        <div id="userEmail" class="user-pill"></div>
+      </header>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div><h2>Staff</h2><p class="muted">Deactivation is used instead of permanent deletion.</p></div>
+          <button id="addStaffBtn" class="primary">+ Add Staff</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>Employee ID</th><th>Name</th><th>Type</th><th>Branch</th>
+              <th>Status</th><th>Roles</th><th>Teaching Areas</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="staffTable"><tr><td colspan="8">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <p id="staffMessage" class="message"></p>
+      </section>
+    </main>
+  </div>
+
+  <div id="staffModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-head"><h2 id="modalTitle">Add Staff</h2><button id="closeModal" class="icon-btn">×</button></div>
+      <form id="staffForm">
+        <input type="hidden" id="editingId">
+        <div class="form-grid">
+          <label>Full Name<input id="fullName" required></label>
+          <label>Employee ID<input id="employeeId" placeholder="Auto-generated if blank"></label>
+          <label>Email<input id="staffEmail" type="email"></label>
+          <label>Phone<input id="phone"></label>
+          <label>Branch<select id="branchId" required></select></label>
+          <label>Staff Type<select id="staffType">
+            <option value="teacher">Teacher</option>
+            <option value="support_staff">Support Staff</option>
+            <option value="coordinator">Coordinator</option>
+          </select></label>
+          <label>Status<select id="status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select></label>
+        </div>
+
+        <div class="subsection">
+          <h3>Roles</h3>
+          <div id="rolesBox" class="check-grid"></div>
+        </div>
+
+        <div id="teacherSection" class="subsection">
+          <h3>Teaching Areas</h3>
+          <div id="instrumentsBox" class="check-grid"></div>
+        </div>
+
+        <label>Notes<textarea id="notes" rows="3"></textarea></label>
+        <p id="formMessage" class="message"></p>
+        <div class="modal-actions">
+          <button type="button" id="cancelBtn" class="secondary">Cancel</button>
+          <button type="submit" class="primary">Save Staff</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="../js/staff.js"></script>
+</body>
+</html>
