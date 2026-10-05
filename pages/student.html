@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SOHMI Student Management</title>
+  <link rel="stylesheet" href="../css/sohmi.css">
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="brand">SOHMI</div>
+      <div class="brand-sub">Admin Panel</div>
+
+      <nav>
+        <a href="../dashboard.html">Dashboard</a>
+        <a href="staff.html">Staff</a>
+        <a class="active" href="student.html">Students</a>
+      </nav>
+
+      <button id="logoutBtn" class="ghost sidebar-logout">
+        Sign Out
+      </button>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <header class="topbar">
+
+        <div>
+          <h1>Student Management</h1>
+          <p class="muted">
+            Students of Sounds Of Heaven Music Institute
+          </p>
+        </div>
+
+        <div id="userEmail" class="user-pill"></div>
+
+      </header>
+
+
+      <!-- STUDENT PANEL -->
+      <section class="panel">
+
+        <div class="panel-head">
+
+          <div>
+            <h2>Students</h2>
+
+            <p class="muted">
+              Add, edit and deactivate students.
+            </p>
+          </div>
+
+          <button id="addStudentBtn" class="primary">
+            + Add Student
+          </button>
+
+        </div>
+
+
+        <!-- STUDENT TABLE -->
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>Student Code</th>
+                <th>Admission No.</th>
+                <th>Name</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Mobile</th>
+                <th>Branch</th>
+                <th>Course</th>
+                <th>Instrument</th>
+                <th>Teacher</th>
+                <th>Package</th>
+                <th>Status</th>
+                <th>Actions</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="studentTable">
+
+              <tr>
+                <td colspan="13">
+                  Loading…
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+        <p id="studentMessage" class="message"></p>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- ADD / EDIT STUDENT MODAL -->
+  <div id="studentModal" class="modal hidden">
+
+    <div class="modal-card">
+
+      <div class="modal-head">
+
+        <h2 id="modalTitle">
+          Add Student
+        </h2>
+
+        <button
+          id="closeModal"
+          class="icon-btn"
+          type="button">
+          ×
+        </button>
+
+      </div>
+
+
+      <form id="studentForm">
+
+        <input
+          type="hidden"
+          id="editingId">
+
+
+        <!-- BASIC INFORMATION -->
+        <div class="subsection">
+
+          <h3>Student Information</h3>
+
+          <div class="form-grid">
+
+            <label>
+              Full Name
+              <input
+                id="fullName"
+                required>
+            </label>
+
+
+            <label>
+              Student Code
+              <input
+                id="studentCode"
+                placeholder="Auto-generated if blank">
+            </label>
+
+
+            <label>
+              Admission Number
+              <input
+                id="admissionNumber">
+            </label>
+
+
+            <label>
+              Date of Birth
+              <input
+                id="dateOfBirth"
+                type="date">
+            </label>
+
+
+            <label>
+              Gender
+
+              <select id="gender">
+
+                <option value="">
+                  Select Gender
+                </option>
+
+                <option value="male">
+                  Male
+                </option>
+
+                <option value="female">
+                  Female
+                </option>
+
+                <option value="other">
+                  Other
+                </option>
+
+              </select>
+
+            </label>
+
+
+            <label>
+              Mobile
+              <input
+                id="mobile"
+                type="tel">
+            </label>
+
+
+            <label>
+              Email
+              <input
+                id="email"
+                type="email">
+            </label>
+
+
+            <label>
+              Joining Date
+              <input
+                id="joiningDate"
+                type="date">
+            </label>
+
+
+            <label>
+              Status
+
+              <select id="status">
+
+                <option value="active">
+                  Active
+                </option>
+
+                <option value="inactive">
+                  Inactive
+                </option>
+
+              </select>
+
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- BRANCH -->
+        <div class="subsection">
+
+          <h3>Branch</h3>
+
+          <div class="form-grid">
+
+            <label>
+              Branch
+
+              <select
+                id="branchId"
+                required>
+              </select>
+
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- COURSE / INSTRUMENT / TEACHER / PACKAGE -->
+        <div class="subsection">
+
+          <h3>Music Learning Details</h3>
+
+          <div class="form-grid">
+
+            <label>
+              Course
+
+              <select id="courseId">
+
+                <option value="">
+                  Select Course
+                </option>
+
+              </select>
+
+            </label>
+
+
+            <label>
+              Instrument
+
+              <select id="instrumentId">
+
+                <option value="">
+                  Select Instrument
+                </option>
+
+              </select>
+
+            </label>
+
+
+            <label>
+              Teacher
+
+              <select id="teacherId">
+
+                <option value="">
+                  Select Teacher
+                </option>
+
+              </select>
+
+            </label>
+
+
+            <label>
+              Package
+
+              <select id="packageId">
+
+                <option value="">
+                  Select Package
+                </option>
+
+              </select>
+
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- ADDRESS -->
+        <div class="subsection">
+
+          <h3>Contact Information</h3>
+
+          <label>
+            Address
+
+            <textarea
+              id="address"
+              rows="3">
+            </textarea>
+
+          </label>
+
+        </div>
+
+
+        <!-- NOTES -->
+        <div class="subsection">
+
+          <h3>Notes</h3>
+
+          <label>
+
+            Additional Notes
+
+            <textarea
+              id="notes"
+              rows="3">
+            </textarea>
+
+          </label>
+
+        </div>
+
+
+        <p
+          id="formMessage"
+          class="message">
+        </p>
+
+
+        <!-- BUTTONS -->
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            id="cancelBtn"
+            class="secondary">
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="primary">
+            Save Student
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- STUDENT JAVASCRIPT -->
+  <script
+    type="module"
+    src="../js/student.js">
+  </script>
+
+</body>
+</html>
