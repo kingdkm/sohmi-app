@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SOHMI Package Management</title>
+  <link rel="stylesheet" href="../css/sohmi.css">
+</head>
+<body>
+  <div class="app-shell">
+
+    <aside class="sidebar">
+      <div class="brand">SOHMI</div>
+      <div class="brand-sub">Admin Panel</div>
+
+      <nav>
+        <a href="../dashboard.html">Dashboard</a>
+        <a href="staff.html">Staff</a>
+        <a href="student.html">Students</a>
+        <a class="active" href="packages.html">Packages</a>
+      </nav>
+
+      <button id="logoutBtn" class="ghost sidebar-logout">Sign Out</button>
+    </aside>
+
+    <main class="main">
+
+      <header class="topbar">
+        <div>
+          <h1>Package Management</h1>
+          <p class="muted">Manage SOHMI fees, schedules, discounts and packages</p>
+        </div>
+
+        <div id="userEmail" class="user-pill"></div>
+      </header>
+
+      <section class="panel">
+
+        <div class="panel-head">
+          <div>
+            <h2>Packages</h2>
+            <p class="muted">
+              Add, edit and deactivate student packages.
+            </p>
+          </div>
+
+          <button id="addPackageBtn" class="primary">
+            + Add Package
+          </button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Package</th>
+                <th>Schedule</th>
+                <th>Duration</th>
+                <th>Classes/Month</th>
+                <th>Fee</th>
+                <th>Discount</th>
+                <th>Final Fee</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody id="packageTable">
+              <tr>
+                <td colspan="10">Loading…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p id="packageMessage" class="message"></p>
+
+      </section>
+    </main>
+  </div>
+
+  <div id="packageModal" class="modal hidden">
+
+    <div class="modal-card">
+
+      <div class="modal-head">
+        <h2 id="modalTitle">Add Package</h2>
+
+        <button
+          id="closeModal"
+          class="icon-btn"
+          type="button"
+        >
+          ×
+        </button>
+      </div>
+
+      <form id="packageForm">
+
+        <input type="hidden" id="editingId">
+
+        <div class="subsection">
+
+          <h3>Package Information</h3>
+
+          <div class="form-grid">
+
+            <label>
+              Package Code
+              <input
+                id="packageCode"
+                required
+                placeholder="Example: QTR-5D"
+              >
+            </label>
+
+            <label>
+              Package Name
+              <input
+                id="packageName"
+                required
+                placeholder="Example: Quarterly — 5 Days/Week"
+              >
+            </label>
+
+            <label>
+              Duration (Months)
+              <input
+                id="durationMonths"
+                type="number"
+                min="1"
+                value="3"
+                required
+              >
+            </label>
+
+            <label>
+              Classes / Month
+              <input
+                id="classesPerMonth"
+                type="number"
+                min="1"
+                value="20"
+                required
+              >
+            </label>
+
+            <label>
+              Fee (₹)
+              <input
+                id="fee"
+                type="number"
+                min="0"
+                step="0.01"
+                required
+              >
+            </label>
+
+            <label>
+              Discount (%)
+              <input
+                id="discountPercent"
+                type="number"
+                min="0"
+                max="100"
+                step="0.01"
+                value="0"
+                required
+              >
+            </label>
+
+            <label>
+              Status
+              <select id="status">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </label>
+
+          </div>
+
+        </div>
+
+        <div class="subsection">
+
+          <h3>Schedule / Description</h3>
+
+          <label>
+            Description
+            <textarea
+              id="description"
+              rows="4"
+              placeholder="Example: Monday–Friday"
+            ></textarea>
+          </label>
+
+        </div>
+
+        <div class="subsection">
+
+          <h3>Fee Preview</h3>
+
+          <div class="card">
+
+            <p>
+              Regular Fee:
+              <strong id="regularFeePreview">₹0</strong>
+            </p>
+
+            <p>
+              Discount:
+              <strong id="discountPreview">0%</strong>
+            </p>
+
+            <p>
+              Discount Amount:
+              <strong id="discountAmountPreview">₹0</strong>
+            </p>
+
+            <p>
+              Final Fee:
+              <strong id="finalFeePreview">₹0</strong>
+            </p>
+
+          </div>
+
+        </div>
+
+        <p id="formMessage" class="message"></p>
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            id="cancelBtn"
+            class="secondary"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="primary"
+          >
+            Save Package
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <script
+    type="module"
+    src="../js/packages.js"
+  ></script>
+
+</body>
+</html>
