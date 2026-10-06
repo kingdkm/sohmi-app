@@ -135,7 +135,7 @@ async function loadMasterData() {
       .from("courses")
       .select("id,course_code,course_name")
       .eq("status", "active")
-      .order("course_name"),
+      .order("created_at"),
 
     supabase
       .from("instruments")
