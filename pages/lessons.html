@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOHMI — Lesson Management</title>
+  <link rel="stylesheet" href="../css/sohmi.css">
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <aside class="sidebar">
+
+      <div class="brand">
+        <div class="brand-name">SOHMI</div>
+        <div class="brand-sub">Admin Panel</div>
+      </div>
+
+      <nav>
+        <a href="../dashboard.html">Dashboard</a>
+        <a href="staff.html">Staff</a>
+        <a href="student.html">Students</a>
+        <a href="packages.html">Packages</a>
+        <a href="lessons.html" class="active">Lessons</a>
+      </nav>
+
+      <button id="logoutBtn" class="ghost sidebar-logout">
+        Sign Out
+      </button>
+
+    </aside>
+
+    <main class="main-content">
+
+      <header class="page-header">
+        <div>
+          <h1>Lesson Management</h1>
+          <p>Manage the SOHMI Lesson Library</p>
+        </div>
+      </header>
+
+      <section class="card">
+
+        <div class="section-header">
+          <div>
+            <h2>Lesson Library</h2>
+            <p>Add, edit and manage SOHMI lessons.</p>
+          </div>
+
+          <button id="addLessonBtn" class="primary">
+            + Add Lesson
+          </button>
+        </div>
+
+        <div class="filters">
+
+          <div class="field">
+            <label for="filterInstrument">Instrument</label>
+            <select id="filterInstrument">
+              <option value="">All Instruments</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="filterCourse">Course</label>
+            <select id="filterCourse">
+              <option value="">All Courses</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="filterLevel">Level</label>
+            <select id="filterLevel">
+              <option value="">All Levels</option>
+              <option value="Spark">Spark</option>
+              <option value="Flow">Flow</option>
+              <option value="Impact">Impact</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="searchLesson">Search</label>
+            <input
+              type="text"
+              id="searchLesson"
+              placeholder="Search lesson..."
+            >
+          </div>
+
+        </div>
+
+        <div class="table-wrap">
+
+          <table>
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Lesson</th>
+                <th>Instrument</th>
+                <th>Course</th>
+                <th>Level</th>
+                <th>Lesson No.</th>
+                <th>Duration</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody id="lessonTable">
+              <tr>
+                <td colspan="9">Loading...</td>
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+
+        <div id="lessonMessage" class="message"></div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- Add / Edit Lesson Modal -->
+
+  <div id="lessonModal" class="modal hidden">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <div>
+          <h2 id="modalTitle">Add Lesson</h2>
+        </div>
+
+        <button id="closeModal" class="icon-button">
+          ×
+        </button>
+
+      </div>
+
+
+      <form id="lessonForm">
+
+        <input type="hidden" id="editingId">
+
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="lessonCode">Lesson Code</label>
+            <input
+              type="text"
+              id="lessonCode"
+              placeholder="Example: GTR-PR-SPARK-001"
+              required
+            >
+          </div>
+
+
+          <div class="field">
+            <label for="lessonNumber">Lesson Number</label>
+            <input
+              type="number"
+              id="lessonNumber"
+              min="1"
+              required
+            >
+          </div>
+
+
+          <div class="field">
+            <label for="instrumentId">Instrument</label>
+            <select id="instrumentId" required>
+              <option value="">Select Instrument</option>
+            </select>
+          </div>
+
+
+          <div class="field">
+            <label for="courseId">Course</label>
+            <select id="courseId" required>
+              <option value="">Select Course</option>
+            </select>
+          </div>
+
+
+          <div class="field">
+            <label for="level">Level</label>
+            <select id="level" required>
+              <option value="">Select Level</option>
+              <option value="Spark">Spark</option>
+              <option value="Flow">Flow</option>
+              <option value="Impact">Impact</option>
+            </select>
+          </div>
+
+
+          <div class="field">
+            <label for="estimatedMinutes">Duration (Minutes)</label>
+            <input
+              type="number"
+              id="estimatedMinutes"
+              min="1"
+              value="40"
+            >
+          </div>
+
+
+          <div class="field field-full">
+            <label for="lessonTitle">Lesson Title</label>
+            <input
+              type="text"
+              id="lessonTitle"
+              placeholder="Example: Introduction to Guitar"
+              required
+            >
+          </div>
+
+
+          <div class="field field-full">
+            <label for="objective">Objective</label>
+            <textarea
+              id="objective"
+              placeholder="What should the student learn?"
+            ></textarea>
+          </div>
+
+
+          <div class="field field-full">
+            <label for="lessonContent">Lesson Content</label>
+            <textarea
+              id="lessonContent"
+              placeholder="Detailed lesson content..."
+            ></textarea>
+          </div>
+
+
+          <div class="field field-full">
+            <label for="homework">Homework</label>
+            <textarea
+              id="homework"
+              placeholder="Practice/homework for the student..."
+            ></textarea>
+          </div>
+
+
+          <div class="field">
+            <label for="videoUrl">Video URL</label>
+            <input
+              type="url"
+              id="videoUrl"
+              placeholder="Optional"
+            >
+          </div>
+
+
+          <div class="field">
+            <label for="sheetMusicUrl">Sheet Music URL</label>
+            <input
+              type="url"
+              id="sheetMusicUrl"
+              placeholder="Optional"
+            >
+          </div>
+
+
+          <div class="field">
+            <label for="prerequisiteLesson">Prerequisite Lesson</label>
+            <select id="prerequisiteLesson">
+              <option value="">None</option>
+            </select>
+          </div>
+
+
+          <div class="field">
+            <label for="status">Status</label>
+            <select id="status">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+
+        </div>
+
+
+        <div id="formMessage" class="message"></div>
+
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            id="cancelBtn"
+            class="secondary"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="primary"
+          >
+            Save Lesson
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <script type="module" src="../js/lessons.js"></script>
+
+</body>
+</html>
