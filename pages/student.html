@@ -37,6 +37,7 @@
 
         <div>
           <h1>Student Management</h1>
+
           <p class="muted">
             Students of Sounds Of Heaven Music Institute
           </p>
@@ -56,7 +57,7 @@
             <h2>Students</h2>
 
             <p class="muted">
-              Add, edit and deactivate students.
+              Add, edit, deactivate students and manage learning progress.
             </p>
           </div>
 
@@ -154,6 +155,7 @@
 
             <label>
               Full Name
+
               <input
                 id="fullName"
                 required>
@@ -162,6 +164,7 @@
 
             <label>
               Student Code
+
               <input
                 id="studentCode"
                 placeholder="Auto-generated if blank">
@@ -170,6 +173,7 @@
 
             <label>
               Admission Number
+
               <input
                 id="admissionNumber">
             </label>
@@ -177,6 +181,7 @@
 
             <label>
               Date of Birth
+
               <input
                 id="dateOfBirth"
                 type="date">
@@ -211,6 +216,7 @@
 
             <label>
               Mobile
+
               <input
                 id="mobile"
                 type="tel">
@@ -219,6 +225,7 @@
 
             <label>
               Email
+
               <input
                 id="email"
                 type="email">
@@ -227,6 +234,7 @@
 
             <label>
               Joining Date
+
               <input
                 id="joiningDate"
                 type="date">
@@ -406,6 +414,271 @@
         </div>
 
       </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================================= -->
+  <!-- STUDENT LEARNING PROGRESS MODAL                           -->
+  <!-- ========================================================= -->
+
+  <div id="progressModal" class="modal hidden">
+
+    <div class="modal-card">
+
+      <div class="modal-head">
+
+        <div>
+
+          <h2 id="progressStudentName">
+            Student Progress
+          </h2>
+
+          <p
+            id="progressStudentInfo"
+            class="muted">
+          </p>
+
+        </div>
+
+        <button
+          id="closeProgressModal"
+          class="icon-btn"
+          type="button">
+          ×
+        </button>
+
+      </div>
+
+
+      <!-- STUDENT PROGRESS SUMMARY -->
+      <div class="subsection">
+
+        <h3>Learning Progress</h3>
+
+        <div class="form-grid">
+
+          <label>
+            Instrument
+
+            <input
+              id="progressInstrument"
+              readonly>
+          </label>
+
+
+          <label>
+            Course
+
+            <input
+              id="progressCourse"
+              readonly>
+          </label>
+
+
+          <label>
+            Teacher
+
+            <input
+              id="progressTeacher"
+              readonly>
+          </label>
+
+
+          <label>
+            Current Unit
+
+            <input
+              id="progressCurrentUnit"
+              readonly
+              placeholder="Loading...">
+          </label>
+
+
+          <label>
+            Current Lesson
+
+            <input
+              id="progressCurrentLesson"
+              readonly
+              placeholder="Loading...">
+          </label>
+
+
+          <label>
+            Current Status
+
+            <select id="progressStatus">
+
+              <option value="not_started">
+                Not Started
+              </option>
+
+              <option value="covered">
+                Covered
+              </option>
+
+              <option value="developing">
+                Developing
+              </option>
+
+              <option value="review_needed">
+                Review Needed
+              </option>
+
+              <option value="repeat">
+                Repeat
+              </option>
+
+              <option value="mastered">
+                Mastered
+              </option>
+
+            </select>
+
+          </label>
+
+        </div>
+
+      </div>
+
+
+      <!-- WHAT TO TEACH NEXT -->
+      <div class="subsection">
+
+        <h3>What To Teach Next</h3>
+
+        <div class="panel"
+             style="margin: 0;">
+
+          <div>
+
+            <p
+              id="nextLessonTitle"
+              style="font-size: 1.15rem; font-weight: 600; margin-bottom: 6px;">
+              Loading recommendation...
+            </p>
+
+            <p
+              id="nextLessonObjective"
+              class="muted">
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- TEACHER NOTES -->
+      <div class="subsection">
+
+        <h3>Teacher Observation</h3>
+
+        <label>
+
+          What did the student achieve?
+
+          <textarea
+            id="progressTeacherNotes"
+            rows="4"
+            placeholder="Record what the student was able to do, difficulties noticed, improvements, etc.">
+          </textarea>
+
+        </label>
+
+      </div>
+
+
+      <!-- HOMEWORK -->
+      <div class="subsection">
+
+        <h3>Homework</h3>
+
+        <label>
+
+          Homework / Practice Recommendation
+
+          <textarea
+            id="progressHomework"
+            rows="3"
+            placeholder="Enter the practice work for the student.">
+          </textarea>
+
+        </label>
+
+      </div>
+
+
+      <!-- TEACHER ACTIONS -->
+      <div class="subsection">
+
+        <h3>Teacher Decision</h3>
+
+        <p class="muted">
+          The system recommends the next step, but the teacher makes the final professional decision.
+        </p>
+
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            id="repeatLessonBtn"
+            class="secondary">
+            Repeat Lesson
+          </button>
+
+
+          <button
+            type="button"
+            id="reviewLessonBtn"
+            class="secondary">
+            Review Needed
+          </button>
+
+
+          <button
+            type="button"
+            id="completeContinueBtn"
+            class="primary">
+            Complete & Continue
+          </button>
+
+
+          <button
+            type="button"
+            id="moveAheadBtn"
+            class="primary">
+            Move Ahead
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- PROGRESS MESSAGE -->
+      <p
+        id="progressMessage"
+        class="message">
+      </p>
+
+
+      <!-- CLOSE -->
+      <div class="modal-actions">
+
+        <button
+          type="button"
+          id="progressDoneBtn"
+          class="secondary">
+          Close
+        </button>
+
+      </div>
 
     </div>
 
