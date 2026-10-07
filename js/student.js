@@ -994,6 +994,20 @@ async function deactivateStudent(id) {
 
 async function loadStudentLessons(student) {
 
+  /*
+   * Load the student's lessons first.
+   *
+   * IMPORTANT:
+   * lesson_number starts again at 1 inside each curriculum unit.
+   * Therefore we must NOT sort by curriculum_unit_id (UUID).
+   *
+   * We load the curriculum unit numbers separately and then sort:
+   *
+   * Unit 1 -> Lesson 1, 2, 3...
+   * Unit 2 -> Lesson 1, 2, 3...
+   * Unit 3 -> Lesson 1, 2, 3...
+   */
+
   let query =
     supabase
       .from("lessons")
@@ -1009,9 +1023,7 @@ async function loadStudentLessons(student) {
         homework,
         status
       `)
-      .eq("status", "active")
-      .order("curriculum_unit_id")
-.order("lesson_number");
+      .eq("status", "active");
 
 
   /*
@@ -1058,11 +1070,159 @@ async function loadStudentLessons(student) {
     );
 
     throw error;
+
   }
 
 
-  availableLessons =
+  const lessons =
     data || [];
+
+
+  /*
+   * No lessons means there is nothing
+   * further to process.
+   */
+
+  if (!lessons.length) {
+
+    availableLessons = [];
+
+    return availableLessons;
+
+  }
+
+
+  /*
+   * Get the curriculum units used by these lessons.
+   */
+
+  const unitIds =
+    [
+      ...new Set(
+        lessons
+          .map(
+            lesson =>
+              lesson.curriculum_unit_id
+          )
+          .filter(Boolean)
+      )
+    ];
+
+
+  let units = [];
+
+
+  if (unitIds.length) {
+
+    const {
+      data: unitData,
+      error: unitError
+    } =
+      await supabase
+        .from("curriculum_units")
+        .select(`
+          id,
+          unit_number,
+          unit_title
+        `)
+        .in("id", unitIds);
+
+
+    if (unitError) {
+
+      console.error(
+        "Unable to load curriculum units:",
+        unitError
+      );
+
+      throw unitError;
+
+    }
+
+
+    units =
+      unitData || [];
+
+  }
+
+
+  /*
+   * Create a lookup:
+   *
+   * curriculum unit UUID
+   *        ->
+   * unit_number / unit_title
+   */
+
+  const unitMap =
+    new Map(
+      units.map(
+        unit => [
+          unit.id,
+          unit
+        ]
+      )
+    );
+
+
+  /*
+   * Attach unit information to each lesson.
+   */
+
+  lessons.forEach(
+    lesson => {
+
+      const unit =
+        unitMap.get(
+          lesson.curriculum_unit_id
+        );
+
+
+      lesson._unitNumber =
+        unit?.unit_number ?? 999999;
+
+      lesson._unitTitle =
+        unit?.unit_title || "";
+
+    }
+  );
+
+
+  /*
+   * CORRECT SOHMI CURRICULUM ORDER
+   *
+   * 1. Curriculum Unit Number
+   * 2. Lesson Number
+   *
+   * We deliberately do NOT sort by UUID.
+   */
+
+  lessons.sort(
+    (a, b) => {
+
+      const unitDifference =
+        a._unitNumber -
+        b._unitNumber;
+
+
+      if (unitDifference !== 0) {
+
+        return unitDifference;
+
+      }
+
+
+      return (
+        (a.lesson_number ?? 999999) -
+        (b.lesson_number ?? 999999)
+      );
+
+    }
+  );
+
+
+  availableLessons =
+    lessons;
 
 
   return availableLessons;
