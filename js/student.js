@@ -1010,7 +1010,8 @@ async function loadStudentLessons(student) {
         status
       `)
       .eq("status", "active")
-      .order("lesson_number");
+      .order("curriculum_unit_id")
+.order("lesson_number");
 
 
   /*
